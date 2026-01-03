@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lock-in Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        #timerDisplay {
+            font-size: 72px;
+            font-weight: bold;
+            margin: 30px 0;
+            color: #00ff88;
+        }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            margin: 20px 0;
+            border: 2px solid #00ff88;
+            background-color: #16213e;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            background-color: #00ff88;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #00cc6f;
+        }
+        
+        #stats {
+            margin-top: 30px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lock-in Timer</h1>
+    
+    <div class="container">
+        <input type="text" id="youtubeLink" placeholder="Paste YouTube link here">
+        <button id="startBtn">Start Lock-in Session</button>
+        
+        <div id="timerDisplay">00:00</div>
+        
+        <div id="videoContainer"></div>
+        
+        <button id="stopBtn">End Session</button>
+        
+        <div id="stats"></div>
+    </div>
+    <script>
+        // Variables to track our timer
+        let timerInterval;
+        let seconds = 0;
+        let isRunning = false;
+        
+        // Get references to HTML elements
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const youtubeLink = document.getElementById('youtubeLink');
+        const videoContainer = document.getElementById('videoContainer');
+        const stats = document.getElementById('stats');
+        
+        // Function to format seconds into MM:SS
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const secs = totalSeconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+        
+        // Function to start the timer
+        function startTimer() {
+            if (isRunning) return; // Don't start if already running
+            
+            isRunning = true;
+            seconds =0;
+            stats.textContent = ''; // Clear previous stats
+            
+            // Update timer every second
+            timerInterval = setInterval(() => {
+                seconds++;
+                timerDisplay.textContent = formatTime(seconds);
+            }, 1000);
+            
+            // Load YouTube video if link provided
+            const link = youtubeLink.value;
+            if (link) {
+                loadYouTubeVideo(link);
+            }
+        }
+        
+        // Function to stop the timer
+        function stopTimer() {
+            if (!isRunning) return;
+            
+            isRunning = false;
+            clearInterval(timerInterval);
+            
+            // Show stats
+            const minutes = Math.floor(seconds / 60);
+            stats.textContent = `Session Complete! You locked in for ${minutes} minutes and ${seconds % 60} seconds.`;
+        }
+        
+        // Function to load YouTube video
+        function loadYouTubeVideo(url) {
+            // Extract video ID from YouTube URL
+            const videoId = url.split('v=')[1]?.split('&')[0];
+            
+            if (videoId) {
+                videoContainer.innerHTML = `
+                    <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                        frameborder="0" allow="autoplay" allowfullscreen>
+                    </iframe>
+                `;
+            }
+        }
+        
+        // Attach event listeners to buttons
+        startBtn.addEventListener('click', startTimer);
+        stopBtn.addEventListener('click', stopTimer);
+    </script>
+</body>
+</body>
+</html>
