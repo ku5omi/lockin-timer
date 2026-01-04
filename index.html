@@ -3,74 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lock-in Timer</title>
+    <title>study with me</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a2e;
-            color: white;
-            text-align: center;
-            padding: 50px;
-        }
-        
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        #timerDisplay {
-            font-size: 72px;
-            font-weight: bold;
-            margin: 30px 0;
-            color: #00ff88;
-        }
-        
-        input {
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            margin: 20px 0;
-            border: 2px solid #00ff88;
-            background-color: #16213e;
-            color: white;
-            border-radius: 5px;
-        }
-        
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            margin: 10px;
-            background-color: #00ff88;
-            color: #1a1a2e;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        button:hover {
-            background-color: #00cc6f;
-        }
-        
-        #stats {
-            margin-top: 30px;
-            font-size: 20px;
-        }
-    </style>
+    body {
+        font-family: 'Gluten', sans-serif;
+        background-color: #fff2c8;
+        color: #c3c15d;
+        text-align: center;
+        padding: 50px;
+        margin: 0;
+    }
+    
+    h1 {
+        font-size: 32px;
+        margin-bottom: 40px;
+        color: #c3c15d;
+    }
+    
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    #timerDisplay {
+        font-size: 100px;
+        font-weight: auto;
+        margin: 60px auto;
+        color: #c3c15d;
+        width: 300px;
+        height: 300px;
+        border: 10px solid #c3c15d;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    input {
+        width: 60%;
+        padding: 12px 20px;
+        font-size: 16px;
+        margin: 20px 10px;
+        border: 2px solid #8f785f;
+        background-color: #fff2c8;
+        color: #8f785f;
+        border-radius: 25px;
+        outline: none;
+        font-family: 'Gluten', sans-serif;
+    }
+
+    input:focus {
+    border: 2px solid #8f785f;
+    }
+    
+    input::placeholder {
+        color: #8f785f;
+        opacity: 0.7;
+        font-family: 'Gluten', sans-serif;
+    }
+    
+    button {
+        padding: 12px 30px;
+        font-size: 16px;
+        margin: 10px;
+        background-color: #8f785f;
+        color: #fff2c8;
+        border: 2px solid #8f785f;
+        border-radius: 25px;
+        cursor: pointer;
+        font-family: 'Gluten', sans-serif;
+    }
+    
+    button:hover {
+        background-color: transparent;
+        color: #8f785f;
+    }
+
+    button:focus {
+    border: 2px solid #8f785f;
+    }
+    
+    #stats {
+        margin-top: 30px;
+        font-size: 18px;
+        color: #c3c15d;
+    }
+    
+    #videoContainer {
+        margin-top: 40px;
+    }
+</style>
 </head>
 <body>
-    <h1>Lock-in Timer</h1>
+    <h1>study with me</h1>
     
     <div class="container">
-        <input type="text" id="youtubeLink" placeholder="Paste YouTube link here">
-        <button id="startBtn">Start Lock-in Session</button>
-        
-        <div id="timerDisplay">00:00</div>
-        
-        <div id="videoContainer"></div>
-        
-        <button id="stopBtn">End Session</button>
-        
-        <div id="stats"></div>
+    
+    <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+        <input type="text" id="youtubeLink" placeholder="Paste link here or play your own music">
+        <button id="toggleBtn">Start</button>
+    </div>
+    
+    <div id="timerDisplay">00:00</div>
+    
+    <div id="videoContainer"></div>
+    
+    <div id="stats"></div>
     </div>
     <script>
         // Variables to track our timer
@@ -78,9 +119,9 @@
         let seconds = 0;
         let isRunning = false;
         
+
         // Get references to HTML elements
-        const startBtn = document.getElementById('startBtn');
-        const stopBtn = document.getElementById('stopBtn');
+        const toggleBtn = document.getElementById('toggleBtn');
         const timerDisplay = document.getElementById('timerDisplay');
         const youtubeLink = document.getElementById('youtubeLink');
         const videoContainer = document.getElementById('videoContainer');
@@ -141,9 +182,16 @@
             }
         }
         
-        // Attach event listeners to buttons
-        startBtn.addEventListener('click', startTimer);
-        stopBtn.addEventListener('click', stopTimer);
+        // Attach event listener to toggle button
+        toggleBtn.addEventListener('click', function() {
+        if (isRunning) {
+            stopTimer();
+            toggleBtn.textContent = 'Start';
+        } else {
+            startTimer();
+            toggleBtn.textContent = 'End';
+        }
+        });
     </script>
 </body>
 </body>
